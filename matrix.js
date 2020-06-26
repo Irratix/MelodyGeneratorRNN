@@ -153,7 +153,6 @@ class Matrix {
 		}
 		let n = x(1);
 		if (isNaN(Number(n))) {
-			console.log(n);
 			throw`Error: cannot apply function to matrix: function does not return a valid number`;
 			return;
 		}
