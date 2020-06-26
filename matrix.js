@@ -49,7 +49,7 @@ class Matrix {
 		for (let i=0; i<this.m; i++) {
 			this.matrix[i] = [];
 			for (let j=0; j<this.n; j++) {
-				if (m[i][j] == undefined || isNaN(m[i][j])) {
+				if (m[i][j] == undefined || isNaN(Number(m[i][j]))) {
 					this.matrix[i][j] = 0;
 				} else {
 					this.matrix[i][j] = Number(m[i][j]);
