@@ -186,4 +186,20 @@ class Matrix {
 		}
 		return newMatrix;
 	}
+	
+	//returns a matrix that is equal to this matrix scaled by some number
+	scale(n) {
+		let x = Number(n);
+		if (typeof x != "number") {
+			throw`Error: cannot scale matrix by non-number type`;
+			return;
+		}
+		let newMatrix = new Matrix(this.m, this.n);
+		for (let i=0; i<this.m; i++) {
+			for (let j=0; j<this.n; j++) {
+				newMatrix.matrix[i][j] = this.matrix[i][j] * x;
+			}
+		}
+		return newMatrix;
+	}
 }
