@@ -130,7 +130,7 @@ class Matrix {
 			return;
 		}
 		if (this.m != object.n) {
-			console.log`Error: cannot multiply ${this.m}*${this.n} matrix with ${object.m}*${object.n} matrix`
+			console.log`Error: cannot multiply ${this.m}*${this.n} matrix with ${object.m}*${object.n} matrix`;
 		}
 		let newMatrix = new Matrix(object.m, this.n);
 		for (let i=0; i-newMatrix.m; i++) {
@@ -148,19 +148,40 @@ class Matrix {
 	//returns a new matrix where function x has been applied to every entry of this matrix
 	withFunction(x) {
 		if (typeof x != "function") {
-			throw`Error: cannot apply function to matrix: parameter is not a function`
+			throw`Error: cannot apply function to matrix: parameter is not a function`;
+			return;
 		}
 		let n = x(1);
 		if (typeof isNaN(Number(n))) {
-			throw`Error: cannot apply function to matrix: function does not return a valid number`
+			throw`Error: cannot apply function to matrix: function does not return a valid number`;
+			return;
 		}
 		if (typeof n == "bigint") {
-			console.log`WARNING: function applied to matrix returns bigint, will be converted to number primitive`
+			console.log`WARNING: function applied to matrix returns bigint, will be converted to number primitive`;
 		}
 		let newMatrix = new Matrix(this.m, this.n);
 		for (let i=0; i<this.m; i++) {
 			for (let j=0; j<this.n; j++) {
 				newMatrix.matrix[i][j] = Number(x(this.matrix[i][j]));
+			}
+		}
+		return newMatrix;
+	}
+	
+	//adds a matrix to this matrix
+	add(object) {
+		if (object instanceof Matrix == false) {
+			throw`Error: cannot add non-matrix object to matrix`;
+			return;
+		}
+		if (this.m != object.m || this.n != object.n) {
+			throw`Error: cannot add matrices of non-equal sizes`;
+			return;
+		}
+		let newMatrix = new Matrix(this.m, this.n);
+		for (let i=0; i<this.m; i++) {
+			for (let j=0; j<this.n; j++) {
+				newMatrix.matrix[i][j] = this.matrix[i][j] + object.matrix[i][j];
 			}
 		}
 		return newMatrix;
