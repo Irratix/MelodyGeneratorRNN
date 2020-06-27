@@ -1,5 +1,28 @@
 class Matrix {
 	
+	//basic syntax:
+	/*
+		to make a new matrix use `new Matrix()
+		parameters are either an array, a 2d array, or two numbers indicating the size of the matrix
+		
+		to set all values in a matrix to 0 use myMatrix.setZeroes()
+		
+		to set all values in a matrix to a random value from 0 to 1 use myMatrix.setRandom()
+		
+		to multiply two matrices use matrixA.mult(matrixB)
+		this returns a new matrix and does not change either input matrix
+		
+		to add two matrices use matrixA.add(matrixB)
+		this returns a new matrix and does not change either input matrix
+		
+		to scale all values in a matrix by some number use myMatrix.scale(number)
+		this returns a new matrix and does not change the current matrix
+		
+		to apply a function to all values in a matrix use myMatrix.withFunction(f)
+		this returns a new matrix and does not change the current matrix
+		parameter f is any function that returns a valid number
+	*/
+	
 	constructor(m, n) {
 		//several cases:
 		if (typeof m == "number") {
