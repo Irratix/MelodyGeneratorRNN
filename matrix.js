@@ -32,7 +32,7 @@ class Matrix {
 		if (typeof m[0][0] == "bigint") {
 			//just a warning, but continue
 			console.log`WARNING: BigInts in matrix will be converted to Number primitive`;
-		} else if (typeof m[0][0] != "number") {
+		} else if (typeof Number(m[0][0]) != "number") {
 			//known incompatible type, just halt
 			throw`Error: invalid declaration of matrix: inconsistent types in array object`;
 			return;
@@ -72,12 +72,12 @@ class Matrix {
 			return;
 		}
 		//check if it's a vector or a matrix 
-		if (typeof m[0] == "number") {
-			//this is a vector, just turn it into a 1xN matrix
-			this.constructAsVector(m);
-		} else if (Array.isArray(m[0])) {
+		if (Array.isArray(m[0]) || m[0] instanceof Float32Array) {
 			//this is already a 2d array, import it
 			this.constructAsMatrix(m);
+		} else if (typeof Number(m[0]) == "number") {
+			//this is a vector, just turn it into a 1xN matrix
+			this.constructAsVector(m);
 		} else if (typeof m[0] == "bigint") {
 			//give a warning, but process the same as a regular vector
 			console.log`WARNING: BigInts in matrix will be converted to Number primitive`;
@@ -109,7 +109,7 @@ class Matrix {
 	setZeroes() {
 		for (let i of this.matrix) {
 			for (let j=0; j<this.n; j++) {
-				i[j] = 0;
+				i[j] = 1;
 			}
 		}
 	}
@@ -125,52 +125,44 @@ class Matrix {
 	
 	//multiplies this matrix by another matrix
 	mult(object) {
+		this.isComputing = true;
 		if (object instanceof Matrix == false) {
-			console.log`Error: cannot multiply matrix with non-matrix object`;
+			throw`Error: cannot multiply matrix with non-matrix object`;
 			return;
 		}
 		if (this.m != object.n) {
-			console.log`Error: cannot multiply ${this.m}*${this.n} matrix with ${object.m}*${object.n} matrix`;
+			throw`Error: cannot multiply ${this.m}*${this.n} matrix with ${object.m}*${object.n} matrix`;
 		}
-		//single thread approach
-		/*
-		let newMatrix = new Matrix(object.m, this.n);
-		for (let i=0; i<newMatrix.m; i++) {
-			for (let j=0; j<newMatrix.n; j++) {
-				let sum = 0;
-				for (let k=0; k<this.m; k++) {
-					sum += this.matrix[k][j] * object.matrix[i][k];
-				}
-				newMatrix.matrix[i][j] = sum;
-			}
-		}*/
 		
-		//multithread approach
-		let newMatrix = new Matrix(object.m, this.n);
-		for (let i=0; i<newMatrix.m; i++) {
-			newMatrix.matrix[i][newMatrix.n] = i;
-		}
-		let p = new Parallel(newMatrix.matrix, {
-			env: {
-				m1: this.matrix,
-				m2: object.matrix
-			}
-		});
-		const requests = p.map(function (arr) {
-			let m1 = global.env.m1;
-			let m2 = global.env.m2;
-			index = arr[arr.length-1];
-			for (let j=0; j<arr.length-1; j++) {
-				let sum = 0;
-				for (let k=0; k<m1.length; k++) {
-					sum += m1[k][j] * m2[index][k];
+		//single thread approach
+		if (this.m * this.n * object.m < 1000) {
+			let newMatrix = new Matrix(object.m, this.n);
+			for (let i=0; i<newMatrix.m; i++) {
+				for (let j=0; j<newMatrix.n; j++) {
+					let sum = 0;
+					for (let k=0; k<this.m; k++) {
+						sum += this.matrix[k][j] * object.matrix[i][k];
+					}
+					newMatrix.matrix[i][j] = sum;
 				}
-				arr[j] = sum;
 			}
-			return arr.splice(0,arr.length-1);
-		});
-		newMatrix.matrix = p.data;
-		return newMatrix;
+			return newMatrix;
+		}
+		
+		//GPU approach
+		if (this.m*this.n*object.m > 3000**3) {
+			throw`Error: ultra large matrix multiplication currently not well-supported`
+			return;
+		}
+		const gpu = new GPU();
+		const multiply = gpu.createKernel(function(m1, m2, length) {
+			let sum = 0;
+			for (let i=0; i<length; i++) {
+				sum += m1[this.thread.y][i] * m2[i][this.thread.y];
+			}
+			return sum;
+		}).setOutput([object.m,this.n]);
+		return new Matrix(multiply(this.matrix, object.matrix, this.m));
 	}
 	
 	//returns a new matrix where function x has been applied to every entry of this matrix
