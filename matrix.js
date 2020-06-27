@@ -107,19 +107,35 @@ class Matrix {
 	
 	//sets every entry in the matrix to 0
 	setZeroes() {
-		for (let i of this.matrix) {
-			for (let j=0; j<this.n; j++) {
-				i[j] = 1;
+		if (this.m * this.n < 1000) {
+			for (let i of this.matrix) {
+				for (let j=0; j<this.n; j++) {
+					i[j] = 0;
+				}
 			}
+		} else {
+			let gpu = new GPU();
+			let randomize = gpu.createKernel(function () {
+				return 0;
+			}).setOutput([this.m,this.n]);
+			this.matrix = randomize();
 		}
 	}
 	
 	//sets every entry in the matrix to a random value
 	setRandom() {
-		for (let i of this.matrix) {
-			for (let j=0; j<this.n; j++) {
-				i[j] = Math.random();
+		if (this.m * this.n < 1000) {
+			for (let i of this.matrix) {
+				for (let j=0; j<this.n; j++) {
+					i[j] = Math.random();
+				}
 			}
+		} else {
+			let gpu = new GPU();
+			let randomize = gpu.createKernel(function () {
+				return Math.random();
+			}).setOutput([this.m,this.n]);
+			this.matrix = randomize();
 		}
 	}
 	
@@ -198,13 +214,20 @@ class Matrix {
 			throw`Error: cannot add matrices of non-equal sizes`;
 			return;
 		}
-		let newMatrix = new Matrix(this.m, this.n);
-		for (let i=0; i<this.m; i++) {
-			for (let j=0; j<this.n; j++) {
-				newMatrix.matrix[i][j] = this.matrix[i][j] + object.matrix[i][j];
+		if (this.m*this.n < 1000) {
+			let newMatrix = new Matrix(this.m, this.n);
+			for (let i=0; i<this.m; i++) {
+				for (let j=0; j<this.n; j++) {
+					newMatrix.matrix[i][j] = this.matrix[i][j] + object.matrix[i][j];
+				}
 			}
+			return newMatrix;
 		}
-		return newMatrix;
+		let gpu = new GPU();
+		let addMatrices = gpu.createKernel(function (m1, m2) {
+			return m1[this.thread.x][this.thread.y] + m2[this.thread.x][this.thread.y];
+		}).setOutput([this.m, this.n]);
+		return new Matrix(addMatrices(this.matrix, object.matrix));
 	}
 	
 	//returns a matrix that is equal to this matrix scaled by some number
@@ -214,12 +237,19 @@ class Matrix {
 			throw`Error: cannot scale matrix by non-number type`;
 			return;
 		}
-		let newMatrix = new Matrix(this.m, this.n);
-		for (let i=0; i<this.m; i++) {
-			for (let j=0; j<this.n; j++) {
-				newMatrix.matrix[i][j] = this.matrix[i][j] * x;
+		if (this.m*this.n < 1000) {
+			let newMatrix = new Matrix(this.m, this.n);
+			for (let i=0; i<this.m; i++) {
+				for (let j=0; j<this.n; j++) {
+					newMatrix.matrix[i][j] = this.matrix[i][j] * x;
+				}
 			}
+			return newMatrix;
 		}
-		return newMatrix;
+		let gpu = new GPU();
+		let addMatrices = gpu.createKernel(function (m, x) {
+			return m[this.thread.x][this.thread.y] * x;
+		}).setOutput([this.m, this.n]);
+		return new Matrix(addMatrices(this.matrix, x));
 	}
 }
