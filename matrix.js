@@ -200,7 +200,7 @@ class Matrix {
 				sum += m1[this.thread.y][i] * m2[i][this.thread.y];
 			}
 			return sum;
-		}).setOutput([object.m,this.n]);
+		}).setOutput([this.n, object.m]);
 		return new Matrix(multiply(this.matrix, object.matrix, this.m));
 	}
 	
