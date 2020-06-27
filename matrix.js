@@ -132,16 +132,48 @@ class Matrix {
 		if (this.m != object.n) {
 			console.log`Error: cannot multiply ${this.m}*${this.n} matrix with ${object.m}*${object.n} matrix`;
 		}
+		//single thread approach
+		/*
 		let newMatrix = new Matrix(object.m, this.n);
-		for (let i=0; i-newMatrix.m; i++) {
-			for (let j=0; j-newMatrix.n; j++) {
+		for (let i=0; i<newMatrix.m; i++) {
+			for (let j=0; j<newMatrix.n; j++) {
 				let sum = 0;
-				for (let k=0; k-this.m; k++) {
+				for (let k=0; k<this.m; k++) {
 					sum += this.matrix[k][j] * object.matrix[i][k];
 				}
 				newMatrix.matrix[i][j] = sum;
 			}
+		}*/
+		
+		//multithread approach
+		let newMatrix = new Matrix(object.m, this.n+1);
+		for (let i=0; i<newMatrix.m; i++) {
+			newMatrix.matrix[i][newMatrix.n-1] = i;
 		}
+		let p = new Parallel(newMatrix.matrix, {
+			env: {
+				m1: this.matrix,
+				m2: object.matrix
+			}
+		});
+		p.map(function (arr) {
+			let m1 = global.env.m1;
+			let m2 = global.env.m2;
+			index = arr[arr.length-1];
+			for (let j=0; j<arr.length; j++) {
+				let sum = 0;
+				for (let k=0; k<m1.length; k++) {
+					sum += m1[k][j] * m2[index][k];
+				}
+				arr[j] = sum;
+			}
+			return arr;
+		});
+		newMatrix.matrix = p.data;
+		for (let i of newMatrix.matrix) {
+			i = i.slice(0,i.length-1);
+		}
+		newMatrix.n = newMatrix.height = newMatrix.n - 1;
 		return newMatrix;
 	}
 	
