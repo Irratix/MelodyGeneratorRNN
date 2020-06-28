@@ -2,7 +2,7 @@ class Matrix {
 	
 	//basic syntax:
 	/*
-		to make a new matrix use `new Matrix()
+		to make a new matrix use new Matrix()
 		parameters are either an array, a 2d array, or two numbers indicating the size of the matrix
 		
 		to set all values in a matrix to 0 use myMatrix.setZeroes()
