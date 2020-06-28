@@ -21,6 +21,7 @@ class Matrix {
 		to apply a function to all values in a matrix use myMatrix.withFunction(f)
 		this returns a new matrix and does not change the current matrix
 		parameter f is any function that returns a valid number
+		parameters of the function are the current value, the x index, and the y index
 	*/
 	
 	constructor(m, n) {
@@ -210,7 +211,7 @@ class Matrix {
 			throw`Error: cannot apply function to matrix: parameter is not a function`;
 			return;
 		}
-		let n = x(1);
+		let n = x(1, 0, 0);
 		if (isNaN(Number(n))) {
 			throw`Error: cannot apply function to matrix: function does not return a valid number`;
 			return;
@@ -221,7 +222,7 @@ class Matrix {
 		let newMatrix = new Matrix(this.m, this.n);
 		for (let i=0; i<this.m; i++) {
 			for (let j=0; j<this.n; j++) {
-				newMatrix.matrix[i][j] = Number(x(this.matrix[i][j]));
+				newMatrix.matrix[i][j] = Number(x(this.matrix[i][j], i, j));
 			}
 		}
 		return newMatrix;
