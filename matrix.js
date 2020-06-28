@@ -147,11 +147,19 @@ class Matrix {
 	}
 	
 	//sets every entry in the matrix to a random value
-	setRandom() {
+	setRandom(min, max) {
+		if (min == undefined) {
+			min = 0;
+			max = 1;
+		}
+		if (max == undefined) {
+			throw`Error: randomization range has lower bound, but upper bound was not defined`;
+			return;
+		}
 		if (this.m * this.n < 1000) {
 			for (let i of this.matrix) {
 				for (let j=0; j<this.n; j++) {
-					i[j] = Math.random();
+					i[j] = Math.abs(min-max) * Math.random() + min;
 				}
 			}
 		} else {
@@ -275,5 +283,10 @@ class Matrix {
 			return m[this.thread.x][this.thread.y] * x;
 		}).setOutput([this.m, this.n]);
 		return new Matrix(addMatrices(this.matrix, x));
+	}
+	
+	//returns whether or not this is a vertical vector
+	isVector() {
+		return this.m == 1;
 	}
 }
