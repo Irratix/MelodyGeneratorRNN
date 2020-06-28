@@ -15,7 +15,7 @@ class NeuralNet {
 		this.weight_In.setRandom(-1,1);
 		this.weight_Out.setRandom(-1,1);
 		this.activation = x => x > 0 ? x : 0;
-		this.outputFunction = x => x > 0 ? x : 0;
+		this.outputFunction = x => x > 0 ? 1 : 0;
 	}
 	
 	//resets the state vector
@@ -37,7 +37,7 @@ class NeuralNet {
 	}
 	
 	
-	//changes the output function. is reLU by default
+	//changes the output function
 	changeOutputFunction(x) {
 		if (typeof x != "function") {
 			throw`Error: can't set output function to something that isn't a function`;
