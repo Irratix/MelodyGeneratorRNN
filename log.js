@@ -12,5 +12,7 @@ function log(msg) {
 //get time as HH:MM string
 function time() {
 	var date = new Date();
-	return "[" + date.getHours() + ":" + date.getMinutes() + "]";
+	let minutes = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+	let hours = (date.getHours() < 10 ? '0' : '') + date.getHours();
+	return "[" + hours + ":" + minutes + "]";
 }
