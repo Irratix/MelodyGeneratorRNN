@@ -34,7 +34,7 @@ class Matrix {
 			this.constructByArray(m);
 		} else {
 			//3- unknown type, just set to null
-			throw`Error: invalid declaration of matrix: incompatible parameters`;
+			log(`Error: invalid declaration of matrix: incompatible parameters`);
 			return;
 		}
 	}
@@ -55,10 +55,10 @@ class Matrix {
 		//do some type validity checks
 		if (typeof m[0][0] == "bigint") {
 			//just a warning, but continue
-			console.log`WARNING: BigInts in matrix will be converted to Number primitive`;
+			console.log(`WARNING: BigInts in matrix will be converted to Number primitive`);
 		} else if (typeof Number(m[0][0]) != "number") {
 			//known incompatible type, just halt
-			throw`Error: invalid declaration of matrix: inconsistent types in array object`;
+			log(`Error: invalid declaration of matrix: inconsistent types in array object`);
 			return;
 		}
 		//check for maximum height
@@ -92,7 +92,7 @@ class Matrix {
 			}
 		}
 		if (isConsistent == false) {
-			throw`Error: invalid declaration of matrix: inconsistent types in array object`;
+			log(`Error: invalid declaration of matrix: inconsistent types in array object`);
 			return;
 		}
 		//check if it's a vector or a matrix 
@@ -108,7 +108,7 @@ class Matrix {
 			this.constructAsVector(m);
 		} else {
 			//invalid types
-			throw`Error: invalid declaration of matrix: non-valid type in array object`;
+			log(`Error: invalid declaration of matrix: non-valid type in array object`);
 			return;
 		}
 	}
@@ -116,7 +116,7 @@ class Matrix {
 	//constructor given by 2 ints, given width and height
 	constructBySize(m, n) {
 		if (typeof n != "number") {
-			throw`Error: invalid declaration of matrix: incompatible parameters`;
+			log(`Error: invalid declaration of matrix: incompatible parameters`);
 			return;
 		}
 		this.width = this.m = m;
@@ -153,7 +153,7 @@ class Matrix {
 			max = 1;
 		}
 		if (max == undefined) {
-			throw`Error: randomization range has lower bound, but upper bound was not defined`;
+			log(`Error: randomization range has lower bound, but upper bound was not defined`);
 			return;
 		}
 		for (let i of this.matrix) {
@@ -167,11 +167,11 @@ class Matrix {
 	mult(object) {
 		this.isComputing = true;
 		if (object instanceof Matrix == false) {
-			throw`Error: cannot multiply matrix with non-matrix object`;
+			log(`Error: cannot multiply matrix with non-matrix object`);
 			return;
 		}
 		if (this.m != object.n) {
-			throw`Error: cannot multiply ${this.m}*${this.n} matrix with ${object.m}*${object.n} matrix`;
+			log(`Error: cannot multiply ${this.m}*${this.n} matrix with ${object.m}*${object.n} matrix`);
 		}
 		
 		//single thread approach
@@ -191,7 +191,7 @@ class Matrix {
 		
 		//GPU approach
 		if (this.m*this.n*object.m > 3000**3) {
-			throw`Error: ultra large matrix multiplication currently not well-supported`
+			log(`Error: ultra large matrix multiplication currently not well-supported`);
 			return;
 		}
 		const gpu = new GPU();
@@ -208,12 +208,12 @@ class Matrix {
 	//returns a new matrix where function x has been applied to every entry of this matrix
 	withFunction(x) {
 		if (typeof x != "function") {
-			throw`Error: cannot apply function to matrix: parameter is not a function`;
+			log(`Error: cannot apply function to matrix: parameter is not a function`);
 			return;
 		}
 		let n = x(1, 0, 0);
 		if (isNaN(Number(n))) {
-			throw`Error: cannot apply function to matrix: function does not return a valid number`;
+			log(`Error: cannot apply function to matrix: function does not return a valid number`);
 			return;
 		}
 		if (typeof n == "bigint") {
@@ -231,11 +231,11 @@ class Matrix {
 	//adds a matrix to this matrix
 	add(object) {
 		if (object instanceof Matrix == false) {
-			throw`Error: cannot add non-matrix object to matrix`;
+			log(`Error: cannot add non-matrix object to matrix`);
 			return;
 		}
 		if (this.m != object.m || this.n != object.n) {
-			throw`Error: cannot add matrices of non-equal sizes`;
+			log(`Error: cannot add matrices of non-equal sizes`);
 			return;
 		}
 		if (this.m*this.n < 1e5) {
@@ -258,7 +258,7 @@ class Matrix {
 	scale(n) {
 		let x = Number(n);
 		if (typeof x != "number") {
-			throw`Error: cannot scale matrix by non-number type`;
+			log(`Error: cannot scale matrix by non-number type`);
 			return;
 		}
 		if (this.m*this.n < 1e5) {

@@ -24,7 +24,7 @@ confirm("OK = Training\nCancel = Generating") ? initTraining() : initGenerating(
 
 //initialize the training process
 function initTraining() {
-	console.log("initializing training");
+	log("Initializing training");
 	let data = getData();
 	const useExistingNetwork  = (function() {
 		return "y" == prompt("Continue training existing network? (y/n)\nIf we're not using an existing network we will be training from scratch");
@@ -45,7 +45,7 @@ function train(network, data) {
 
 //initialize generating process
 function initGenerating() {
-	console.log("initializing generating");
+	log("Initializing generating");
 	let network = getNetwork();
 	const melodyLength = (function() {
 		return 64;
@@ -66,9 +66,6 @@ function generate(network, length) {
 	for (let i=0; i<melody.length; i++) {
 		melody[i] = melody[i][0];
 	}
-	console.log(network);
-	console.log(melody);
-	console.log(JSON.stringify(melody));
 }
 
 //gets first notes for the generating process 

@@ -2,7 +2,7 @@ class NeuralNet {
 	
 	constructor(stateLength, inputLength, outputLength) {
 		if (typeof stateLength != "number" || typeof inputLength != "number" || typeof outputLength != "number") {
-			throw`Error: cannot create matrix with non-number vector sizes`;
+			log(`Error: cannot create matrix with non-number vector sizes`);
 			return;
 		}
 		this.bias = new Matrix(1,stateLength);
@@ -26,11 +26,11 @@ class NeuralNet {
 	//changes the activation function. is sigmoid by default
 	changeActivation(x) {
 		if (typeof x != "function") {
-			throw`Error: can't set activation function to something that isn't a function`;
+			log(`Error: can't set activation function to something that isn't a function`);
 			return;
 		}
 		if (typeof Number(x(0)) != "number") {
-			throw`Error: can't set activation function to something that doesn't return a number`;
+			log(`Error: can't set activation function to something that doesn't return a number`);
 			return;
 		}
 		this.activation = x;
@@ -40,11 +40,11 @@ class NeuralNet {
 	//changes the output function
 	changeOutputFunction(x) {
 		if (typeof x != "function") {
-			throw`Error: can't set output function to something that isn't a function`;
+			log(`Error: can't set output function to something that isn't a function`);
 			return;
 		}
 		if (typeof Number(x(0)) != "number") {
-			throw`Error: can't set ouput function to something that doesn't return a number`;
+			log(`Error: can't set ouput function to something that doesn't return a number`);
 			return;
 		}
 		this.outputFunction = x;
@@ -53,15 +53,15 @@ class NeuralNet {
 	//calculates the new state based on some input vector
 	calculateState(input) {
 		if (input instanceof Matrix == false) {
-			throw`Error: cannot take non-vector as input. Vectors must be an instance of Matrix`;
+			log(`Error: cannot take non-vector as input. Vectors must be an instance of Matrix`);
 			return;
 		}
 		if (input.isVector() == false) {
-			throw`Error: cannot take non-vector as input`;
+			log(`Error: cannot take non-vector as input`);
 			return;
 		}
 		if (input.height != this.weight_In.width) {
-			throw`Error: input vector is of incorrect size`;
+			log(`Error: input vector is of incorrect size`);
 			return;
 		}
 		let stateCalc = this.weight.mult(this.state);
