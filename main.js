@@ -20,11 +20,6 @@ are we training?
 const NET_STATE_SIZE = 100;
 const NOTE_RANGE = 25;
 
-//ask whether we're training or generating and activate corresponding function
-(function() {
-	return "y" == prompt("Are we training a network? (y/n)\nIf we're not training, then we're generating based on an existing network");
-})() ? initTraining() : initGenerating();
-
 //initialize the training process
 function initTraining() {
 	console.log("initializing training");
@@ -51,7 +46,7 @@ function initGenerating() {
 	console.log("initializing generating");
 	let network = getNetwork();
 	const melodyLength = (function() {
-		return Number(prompt("How many steps in the melody?"));
+		return 64;
 	})();
 	generate(network, melodyLength);
 }
