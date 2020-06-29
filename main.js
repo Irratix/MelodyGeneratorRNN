@@ -17,7 +17,7 @@ are we training?
 */
 
 //some settings
-const NET_STATE_SIZE = 200;
+const NET_STATE_SIZE = 100;
 const NOTE_RANGE = 25;
 
 //ask whether we're training or generating and activate corresponding function
@@ -58,7 +58,24 @@ function initGenerating() {
 
 //let a network generate melodies
 function generate(network, length) {
+	let init = getInitialNotes();
+	network.resetState();
+	network.calculateState(init);
+	let melody = [];
+	for (let i=0; i<length; i++) {
+		melody[i] = network.getOutput().matrix;
+		network.calculateState(new Matrix(melody[i]));
+	}
+	console.log(network);
+	console.log(melody);
+	console.log(JSON.stringify(melody));
+}
+
+//gets first notes for the generating process 
+function getInitialNotes() {
 	//TODO
+	let vector = new Matrix(1,NOTE_RANGE);
+	return vector.withFunction(x => Math.floor(2*Math.random()));
 }
 
 //asks for training data and returns it

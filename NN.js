@@ -14,8 +14,8 @@ class NeuralNet {
 		this.weight.setRandom(-1,1);
 		this.weight_In.setRandom(-1,1);
 		this.weight_Out.setRandom(-1,1);
-		this.activation = x => x > 0 ? x : 0;
-		this.outputFunction = x => x > 0 ? 1 : 0;
+		this.activation = x => Math.tanh(x);
+		this.outputFunction = x => x > 0.5 ? 1 : 0;
 	}
 	
 	//resets the state vector
@@ -23,7 +23,7 @@ class NeuralNet {
 		this.state.setZeroes();
 	}
 	
-	//changes the activation function. is reLU by default
+	//changes the activation function. is sigmoid by default
 	changeActivation(x) {
 		if (typeof x != "function") {
 			throw`Error: can't set activation function to something that isn't a function`;
@@ -65,11 +65,8 @@ class NeuralNet {
 			return;
 		}
 		let stateCalc = this.weight.mult(this.state);
-		console.log(stateCalc);
 		let inputCalc = this.weight_In.mult(input);
-		console.log(inputCalc);
 		let vectorSum = stateCalc.add(inputCalc).add(this.bias);
-		console.log(vectorSum);
 		this.state = vectorSum.withFunction(this.activation);
 	}
 	

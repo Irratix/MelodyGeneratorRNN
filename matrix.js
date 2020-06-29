@@ -131,7 +131,7 @@ class Matrix {
 	
 	//sets every entry in the matrix to 0
 	setZeroes() {
-		if (this.m * this.n < 1000) {
+		if (this.m * this.n < 1e5) {
 			for (let i of this.matrix) {
 				for (let j=0; j<this.n; j++) {
 					i[j] = 0;
@@ -156,18 +156,10 @@ class Matrix {
 			throw`Error: randomization range has lower bound, but upper bound was not defined`;
 			return;
 		}
-		if (this.m * this.n < 1000) {
-			for (let i of this.matrix) {
-				for (let j=0; j<this.n; j++) {
-					i[j] = Math.abs(min-max) * Math.random() + min;
-				}
+		for (let i of this.matrix) {
+			for (let j=0; j<this.n; j++) {
+				i[j] = Math.abs(min-max) * Math.random() + min;
 			}
-		} else {
-			let gpu = new GPU();
-			let randomize = gpu.createKernel(function () {
-				return Math.random();
-			}).setOutput([this.m,this.n]);
-			this.matrix = randomize();
 		}
 	}
 	
@@ -183,7 +175,7 @@ class Matrix {
 		}
 		
 		//single thread approach
-		if (this.m * this.n * object.m < 1000) {
+		if (this.m * this.n * object.m < 1e5) {
 			let newMatrix = new Matrix(object.m, this.n);
 			for (let i=0; i<newMatrix.m; i++) {
 				for (let j=0; j<newMatrix.n; j++) {
@@ -246,7 +238,7 @@ class Matrix {
 			throw`Error: cannot add matrices of non-equal sizes`;
 			return;
 		}
-		if (this.m*this.n < 1000) {
+		if (this.m*this.n < 1e5) {
 			let newMatrix = new Matrix(this.m, this.n);
 			for (let i=0; i<this.m; i++) {
 				for (let j=0; j<this.n; j++) {
@@ -269,7 +261,7 @@ class Matrix {
 			throw`Error: cannot scale matrix by non-number type`;
 			return;
 		}
-		if (this.m*this.n < 1000) {
+		if (this.m*this.n < 1e5) {
 			let newMatrix = new Matrix(this.m, this.n);
 			for (let i=0; i<this.m; i++) {
 				for (let j=0; j<this.n; j++) {
