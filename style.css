@@ -4,6 +4,14 @@
 	background-color: #000;
 }
 
+#buttonBar {
+	background-color: #ffffff11;
+	width: 200px;
+	height: 500px;
+	display: inline-block;
+	vertical-align: top;
+}
+
 #log {
 	width: 900px;
 	height: 400px;
