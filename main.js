@@ -66,6 +66,9 @@ function generate(network, length) {
 		melody[i] = network.getOutput().matrix;
 		network.calculateState(new Matrix(melody[i]));
 	}
+	for (let i=0; i<melody.length; i++) {
+		melody[i] = melody[i][0];
+	}
 	console.log(network);
 	console.log(melody);
 	console.log(JSON.stringify(melody));
