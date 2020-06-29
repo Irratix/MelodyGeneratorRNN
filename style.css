@@ -1,6 +1,6 @@
 #myCanvas {
 	width: 1000px;
-	height: 400px;
+	height: 500px;
 	background-color: #000;
 }
 
@@ -11,7 +11,9 @@
 	color: #2d2;
 	vertical-align: top;
 	padding: 0px;
-	
+	overflow-wrap: break-word;
+	overflow: scroll;
+	overflow-x: hidden;
 	font-family: monospace;
 }
 
