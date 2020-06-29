@@ -20,6 +20,8 @@ are we training?
 const NET_STATE_SIZE = 100;
 const NOTE_RANGE = 25;
 
+confirm("OK = Training\nCancel = Generating") ? initTraining() : initGenerating();
+
 //initialize the training process
 function initTraining() {
 	console.log("initializing training");
