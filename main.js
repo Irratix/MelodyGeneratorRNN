@@ -20,19 +20,23 @@ are we training?
 const NET_STATE_SIZE = 100;
 const NOTE_RANGE = 25;
 
-//initialize the training process
-function initTraining() {
-	log("Initializing training");
-	let data = getData();
-	const useExistingNetwork  = (function() {
-		return "y" == prompt("Continue training existing network? (y/n)\nIf we're not using an existing network we will be training from scratch");
-	})();
-	let network;
-	if (useExistingNetwork) {
-		network = getNetwork();
-	} else {
-		network = new NeuralNet(NET_STATE_SIZE, NOTE_RANGE, NOTE_RANGE);
+var network = null;
+var data = null;
+
+//start the training process
+function startTraining() {
+	log("Starting training...");
+	
+	if (network == null) {
+		log("Error: No network loaded.");
+		return;
 	}
+	
+	if (data == null) {
+		log("Error: No data loaded.");
+		return;
+	}
+	
 	train(network, data);
 }
 
@@ -41,10 +45,15 @@ function train(network, data) {
 	//TODO
 }
 
-//initialize generating process
-function initGenerating() {
-	log("Initializing generating");
-	let network = getNetwork();
+//start the generating process
+function startGenerating() {
+	log("Starting generating...");
+	
+	if (network == null) {
+		log("Error: No network loaded.");
+		return;
+	}
+	
 	const melodyLength = (function() {
 		return 64;
 	})();
@@ -73,14 +82,20 @@ function getInitialNotes() {
 	return vector.withFunction(x => Math.floor(2*Math.random()));
 }
 
-//asks for training data and returns it
-function getData() {
+//loads training data
+function loadData() {
 	//TODO
-	return [];
+	log("Unimplemented code in loadData()!");
 }
 
-//asks for an existing neural network and returns it
-function getNetwork() {
+//loads existing network
+function loadNetwork() {
 	//TODO
-	return new NeuralNet(NET_STATE_SIZE, NOTE_RANGE, NOTE_RANGE);
+	log("Unimplemented code in getNetwork()!");
+}
+
+//initializes a new network
+function initNetwork() {
+	log("Initialized new network.");
+	network = new NeuralNet(NET_STATE_SIZE, NOTE_RANGE, NOTE_RANGE);
 }
