@@ -82,12 +82,6 @@ function getInitialNotes() {
 	return vector.withFunction(x => Math.floor(2*Math.random()));
 }
 
-//loads training data
-function loadData() {
-	//TODO
-	log("Unimplemented code in loadData()!");
-}
-
 //loads existing network
 function loadNetwork() {
 	//TODO

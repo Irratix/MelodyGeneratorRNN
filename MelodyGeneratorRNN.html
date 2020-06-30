@@ -12,7 +12,7 @@
 		<hr>
 		<button onclick="initNetwork()">Init New Network</button>
 		<button onclick="loadNetwork()">Load Network</button>
-		<button onclick="loadData()">Load Training Data</button>
+		<input id="fileinput" type="file" onchange="loadData()" multiple>Load Training Data</input>
 	</div>
 	<div id="log"></div>
 </body>
@@ -22,5 +22,6 @@
 <script src="NN.js"></script>
 <script src="matrix.js"></script>
 <script src="log.js"></script>
+<script src="loadData.js"></script>
 
 <script src="main.js"></script>
