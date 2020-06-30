@@ -75,12 +75,13 @@ function getInitialNotes() {
 
 //asks for training data and returns it
 function getData() {
-	//TODO
+	/* Merging test Simon */
+	/* Test test 1 2 3 */
 	return [];
 }
 
 //asks for an existing neural network and returns it
 function getNetwork() {
-	//TODO 
+	//TODO
 	return new NeuralNet(NET_STATE_SIZE, NOTE_RANGE, NOTE_RANGE);
 }
