@@ -18,6 +18,34 @@
 	display: none;
 }
 
+#fileinput {
+	visibility: hidden;
+}
+
+.inputlabel {
+	background-color: #fff;
+	font-family: Arial;
+	font-size: 14px;
+	width: 166px;
+	display: inline-block;
+	text-align: center;
+	height: 26px;
+	line-height: 26px;
+	cursor: pointer;
+	border: 2px solid #bbb;
+	border-radius: 5px;
+	margin-bottom: 5px;
+}
+
+.inputlabel:hover {
+	background-color: #ddd;
+}
+
+.inputlabel:active {
+	position: relative;
+	top: 2px;
+}
+
 #log {
 	width: 900px;
 	height: 400px;
@@ -44,6 +72,8 @@ button {
 	border-radius: 5px;
 	cursor: pointer;
 	outline: none;
+	font-family: Arial;
+	font-size: 14px;
 }
 
 button:hover {

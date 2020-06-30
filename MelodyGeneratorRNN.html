@@ -12,7 +12,10 @@
 		<hr>
 		<button onclick="initNetwork()">Init New Network</button>
 		<button onclick="loadNetwork()">Load Network</button>
-		<input id="fileinput" type="file" onchange="loadData()" multiple>Load Training Data</input>
+		<label for="fileinput" class="inputlabel">
+			Load Training Data
+		</label>
+		<input id="fileinput" type="file" onchange="loadData()" multiple></input>
 	</div>
 	<div id="log"></div>
 </body>
