@@ -76,7 +76,8 @@ function getInitialNotes() {
 //asks for training data and returns it
 function getData() {
 	//TODO
-	return [];
+	let x = new Matrix(1,0);
+	return x.matrix;
 }
 
 //asks for an existing neural network and returns it
