@@ -20,8 +20,8 @@ are we training?
 const NET_STATE_SIZE = 100;
 const NOTE_RANGE = 25;
 
-var network = null;
-var data = null;
+let network = null;
+let data = null;
 
 //start the training process
 function startTraining() {
@@ -98,4 +98,14 @@ function loadNetwork() {
 function initNetwork() {
 	log("Initialized new network.");
 	network = new NeuralNet(NET_STATE_SIZE, NOTE_RANGE, NOTE_RANGE);
+}
+
+//saves current network
+function saveNetwork() {
+	let objectString = JSON.stringify(network, null, "\t");
+	let a = document.createElement('a');
+	let file = new Blob([objectString], {type: "string"});
+	a.href = URL.createObjectURL(file);
+	a.download = "network.json";
+	a.click();
 }
