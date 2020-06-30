@@ -75,8 +75,7 @@ function getInitialNotes() {
 
 //asks for training data and returns it
 function getData() {
-	/* Merging test Simon */
-	/* Test test 1 2 3 */
+	//TODO
 	return [];
 }
 
