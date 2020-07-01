@@ -40,11 +40,6 @@ function startTraining() {
 	train(network, data);
 }
 
-//train a network on a dataset
-function train(network, data) {
-	//TODO
-}
-
 //start the generating process
 function startGenerating() {
 	log("Starting generating...");
