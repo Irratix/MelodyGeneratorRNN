@@ -26,6 +26,16 @@ function saveNetwork() {
 	a.click();
 }
 
+//saves an object as JSON
+function saveObject(object, name) {
+	let objectString = JSON.stringify(object, null, "\t");
+	let a = document.createElement('a');
+	let file = new Blob([objectString], {type: "string"});
+	a.href = URL.createObjectURL(file);
+	a.download = name + ".json";
+	a.click();
+}
+
 //loads existing network
 function loadNetwork() {
 	NNinput.click();

@@ -73,6 +73,7 @@ function generate(network, length) {
 	for (let i=0; i<melody.length; i++) {
 		melody[i] = melody[i][0];
 	}
+	saveObject(melody, "melody");
 }
 
 //gets first notes for the generating process 
