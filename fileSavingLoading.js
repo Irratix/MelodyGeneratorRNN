@@ -28,6 +28,19 @@ function saveNetwork() {
 
 //loads existing network
 function loadNetwork() {
-	//TODO
-	log("Unimplemented code in getNetwork()!");
+	NNinput.click();
+}
+
+let NNinput;
+NNinput = document.createElement('input');
+NNinput.type = 'file';
+
+NNinput.onchange = e => { 
+	let file = e.target.files[0]; 
+	let reader = new FileReader();
+	reader.readAsText(file,'UTF-8');
+	reader.onload = readerEvent => {
+		network = JSON.parse(readerEvent.target.result);
+		log("Object loaded.");
+	}
 }
