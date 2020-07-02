@@ -6,16 +6,18 @@ class NeuralNet {
 			return;
 		}
 		this.bias = new Matrix(1,stateLength);
+		this.bias_Out = new Matrix(1,outputLength);
 		this.state = new Matrix(1,stateLength);
 		this.weight_In = new Matrix(inputLength, stateLength);
 		this.weight = new Matrix(stateLength, stateLength);
 		this.weight_Out = new Matrix(stateLength, outputLength);
 		this.bias.setRandom(-1,1);
+		this.bias_Out.setRandom(-1,1);
 		this.weight.setRandom(-1,1);
 		this.weight_In.setRandom(-1,1);
 		this.weight_Out.setRandom(-1,1);
 		this.activation = x => Math.tanh(x);
-		this.outputFunction = x => x > 0.5 ? 1 : 0;
+		this.outputFunction = x => Math.tanh(x);
 	}
 	
 	//resets the state vector
@@ -72,6 +74,6 @@ class NeuralNet {
 	
 	//returns the output based on the current state
 	getOutput() {
-		return this.weight_Out.mult(this.state).withFunction(this.outputFunction);
+		return this.weight_Out.mult(this.state).add(this.bias_Out).withFunction(this.outputFunction);
 	}
 }

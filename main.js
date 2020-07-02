@@ -65,9 +65,15 @@ function generate(network, length) {
 		melody[i] = network.getOutput().matrix;
 		network.calculateState(new Matrix(melody[i]));
 	}
+	
 	for (let i=0; i<melody.length; i++) {
 		melody[i] = melody[i][0];
+		
+		//convert to 0s and 1s
+		melody[i] = melody[i].map(x => x > 0 ? 1 : 0);
+		console.log(melody[i]);
 	}
+	
 	saveObject(melody, "melody");
 }
 
