@@ -2,7 +2,7 @@ class NeuralNet {
 	
 	constructor(stateLength, inputLength, outputLength) {
 		if (typeof stateLength != "number" || typeof inputLength != "number" || typeof outputLength != "number") {
-			log(`Error: cannot create matrix with non-number vector sizes`);
+			throw(`Error: cannot create matrix with non-number vector sizes`);
 			return;
 		}
 		this.bias = new Matrix(1,stateLength);
@@ -28,11 +28,11 @@ class NeuralNet {
 	//changes the activation function. is sigmoid by default
 	changeActivation(x) {
 		if (typeof x != "function") {
-			log(`Error: can't set activation function to something that isn't a function`);
+			throw(`Error: can't set activation function to something that isn't a function`);
 			return;
 		}
 		if (typeof Number(x(0)) != "number") {
-			log(`Error: can't set activation function to something that doesn't return a number`);
+			throw(`Error: can't set activation function to something that doesn't return a number`);
 			return;
 		}
 		this.activation = x;
@@ -42,11 +42,11 @@ class NeuralNet {
 	//changes the output function
 	changeOutputFunction(x) {
 		if (typeof x != "function") {
-			log(`Error: can't set output function to something that isn't a function`);
+			throw(`Error: can't set output function to something that isn't a function`);
 			return;
 		}
 		if (typeof Number(x(0)) != "number") {
-			log(`Error: can't set ouput function to something that doesn't return a number`);
+			throw(`Error: can't set ouput function to something that doesn't return a number`);
 			return;
 		}
 		this.outputFunction = x;
@@ -55,15 +55,15 @@ class NeuralNet {
 	//calculates the new state based on some input vector
 	calculateState(input) {
 		if (input instanceof Matrix == false) {
-			log(`Error: cannot take non-vector as input. Vectors must be an instance of Matrix`);
+			throw(`Error: cannot take non-vector as input. Vectors must be an instance of Matrix`);
 			return;
 		}
 		if (input.isVector() == false) {
-			log(`Error: cannot take non-vector as input`);
+			throw(`Error: cannot take non-vector as input`);
 			return;
 		}
 		if (input.height != this.weight_In.width) {
-			log(`Error: input vector is of incorrect size`);
+			throw(`Error: input vector is of incorrect size`);
 			return;
 		}
 		let stateCalc = this.weight.mult(this.state);
@@ -75,5 +75,19 @@ class NeuralNet {
 	//returns the output based on the current state
 	getOutput() {
 		return this.weight_Out.mult(this.state).add(this.bias_Out).withFunction(this.outputFunction);
+	}
+	
+	//returns the output based on the current state, without activation function
+	getOutputWOS() {
+		return this.weight_Out.mult(this.state).add(this.bias_Out);
+	}
+	
+	costSum(desiredValue) {
+		let cost = this.getOutput().add(desiredValue.scale(-1)).withFunction(x => x ** 2);
+		let sum = 0;
+		for (let thing of cost.matrix[0]) {
+			sum += thing;
+		}
+		return sum;
 	}
 }

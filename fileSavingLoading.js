@@ -52,5 +52,15 @@ NNinput.onchange = e => {
 	reader.onload = readerEvent => {
 		network = JSON.parse(readerEvent.target.result);
 		log("Object loaded.");
+		
+		let loadedNetwork = new NeuralNet(NET_STATE_SIZE, NOTE_RANGE, NOTE_RANGE);
+		loadedNetwork.bias = new Matrix(network.bias.matrix);
+		loadedNetwork.bias_Out = new Matrix(network.bias_Out.matrix);
+		loadedNetwork.state = new Matrix(network.state.matrix);
+		loadedNetwork.weight = new Matrix(network.weight.matrix);
+		loadedNetwork.weight_In = new Matrix(network.weight_In.matrix);
+		loadedNetwork.weight_Out = new Matrix(network.weight_Out.matrix);
+		
+		network = loadedNetwork;
 	}
 }

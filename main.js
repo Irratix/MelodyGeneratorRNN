@@ -37,7 +37,7 @@ function startTraining() {
 		return;
 	}
 	
-	train(network, data);
+	train();
 }
 
 //start the generating process
@@ -70,7 +70,7 @@ function generate(network, length) {
 		melody[i] = melody[i][0];
 		
 		//convert to 0s and 1s
-		melody[i] = melody[i].map(x => x > 0 ? 1 : 0);
+		melody[i] = melody[i].map(x => x > 0.1 ? 1 : 0);
 		console.log(melody[i]);
 	}
 	
