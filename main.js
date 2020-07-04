@@ -29,8 +29,10 @@ function update() {
 		train();
 	}
 	
+	ctx.clearRect(0,0,c.width,c.height);
 	drawNetwork();
 	drawBias();
+	drawCostSum();
 	
 	window.requestAnimationFrame(update);
 }

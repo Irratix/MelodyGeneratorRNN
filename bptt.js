@@ -1,10 +1,11 @@
 let precision = 10;
+let totalCost = 0;
 
 //train a network on a dataset
 function train() {
 	let weight_adjust = new Matrix(NET_STATE_SIZE, NOTE_RANGE);
 	let bias_adjust = new Matrix(1, NOTE_RANGE);
-	let totalCost = 0;
+	totalCost = 0;
 	
 	//for each melody in the dataset
 	for (melody of data) {
@@ -44,7 +45,7 @@ function train() {
 	bias_adjust   = bias_adjust.scale(1/(data.length * 63 * precision));
 	weight_adjust = weight_adjust.scale(1/(data.length * 63 * precision));
 	
-	log("Sum of cost values: " + totalCost);
+	drawCostSum();
 	
 	// apply to network weights and biases
 	network.bias_Out = network.bias_Out.add(bias_adjust);

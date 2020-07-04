@@ -53,6 +53,7 @@ function drawBias() {
 	}
 }
 
-function drawCostSum(sum) {
-	//TODO
+function drawCostSum() {
+	ctx.fillStyle = "white";
+	ctx.fillText("SUM OF COST VALUES: " + totalCost.toFixed(3), 30, 250);
 }
