@@ -8,6 +8,7 @@
 	<canvas id="myCanvas"></canvas>
 	<div id="buttonBar">
 		<button onclick="startTraining()">Start Training</button>
+		<button onclick="stopTraining()">Stop Training</button>
 		<button onclick="startGenerating()">Start Generating</button>
 		<hr>
 		<button onclick="initNetwork()">Init New Network</button>
@@ -17,6 +18,9 @@
 			Load Training Data
 		</label>
 		<input id="fileinput" type="file" onchange="loadData()" multiple></input>
+		<hr>
+		<button onclick="precision++">Precision Up</button>
+		<button onclick="precision--">Precision Down</button>
 	</div>
 	<div id="log"></div>
 </body>
@@ -28,5 +32,6 @@
 <script src="log.js"></script>
 <script src="bptt.js"></script>
 <script src="fileSavingLoading.js"></script>
+<script src="graphics.js"></script>
 
 <script src="main.js"></script>

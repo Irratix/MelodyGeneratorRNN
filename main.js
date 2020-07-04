@@ -29,6 +29,9 @@ function update() {
 		train();
 	}
 	
+	drawNetwork();
+	drawBias();
+	
 	window.requestAnimationFrame(update);
 }
 update();
@@ -48,6 +51,11 @@ function startTraining() {
 	}
 	
 	training = true;
+}
+
+function stopTraining() {
+	training = false;
+	log("Stopped training.");
 }
 
 //start the generating process

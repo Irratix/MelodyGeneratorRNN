@@ -1,7 +1,6 @@
 #myCanvas {
-	width: 900px;
-	height: 500px;
 	background-color: #000;
+	letter-spacing: 2px;
 }
 
 #buttonBar {
@@ -34,7 +33,7 @@
 	cursor: pointer;
 	border: 2px solid #bbb;
 	border-radius: 5px;
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 }
 
 .inputlabel:hover {

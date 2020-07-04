@@ -1,3 +1,5 @@
+let precision = 10;
+
 //train a network on a dataset
 function train() {
 	let weight_adjust = new Matrix(NET_STATE_SIZE, NOTE_RANGE);
@@ -39,8 +41,8 @@ function train() {
 	}
 	
 	// average/scale bias_adjust and weight_adjust
-	bias_adjust   = bias_adjust.scale(1/(data.length * 63 * 5));
-	weight_adjust = weight_adjust.scale(1/(data.length * 63 * 5));
+	bias_adjust   = bias_adjust.scale(1/(data.length * 63 * precision));
+	weight_adjust = weight_adjust.scale(1/(data.length * 63 * precision));
 	
 	log("Sum of cost values: " + totalCost);
 	
