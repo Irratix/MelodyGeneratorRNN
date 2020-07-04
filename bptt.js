@@ -39,10 +39,10 @@ function train() {
 	}
 	
 	// average/scale bias_adjust and weight_adjust
-	bias_adjust   = bias_adjust.scale(1/(data.length * 63 * 10));
-	weight_adjust = weight_adjust.scale(1/(data.length * 63 * 10));
+	bias_adjust   = bias_adjust.scale(1/(data.length * 63 * 5));
+	weight_adjust = weight_adjust.scale(1/(data.length * 63 * 5));
 	
-	console.log("Sum of cost values: " + totalCost);
+	log("Sum of cost values: " + totalCost);
 	
 	// apply to network weights and biases
 	network.bias_Out = network.bias_Out.add(bias_adjust);

@@ -22,6 +22,16 @@ const NOTE_RANGE = 25;
 
 let network = null;
 let data = null;
+let training = false;
+
+function update() {
+	if (training) {
+		train();
+	}
+	
+	window.requestAnimationFrame(update);
+}
+update();
 
 //start the training process
 function startTraining() {
@@ -37,7 +47,7 @@ function startTraining() {
 		return;
 	}
 	
-	train();
+	training = true;
 }
 
 //start the generating process
@@ -50,7 +60,7 @@ function startGenerating() {
 	}
 	
 	const melodyLength = (function() {
-		return 64;
+		return 5000;
 	})();
 	generate(network, melodyLength);
 }
