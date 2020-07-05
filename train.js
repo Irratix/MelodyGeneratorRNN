@@ -61,6 +61,11 @@ function train() {
 	network.weight_Out = network.weight_Out.add(weight_adjust);
 }
 
+function addPrecision(a) {
+	precision += a;
+	if (precision < 1) precision = 1;
+}
+
 /*
 	CALCULATING WEIGHT ADJUSTMENTS
 	- derivative of output of node j w/o tanh w.r.t. weight (j,k)

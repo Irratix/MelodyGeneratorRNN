@@ -19,8 +19,10 @@
 		</label>
 		<input id="fileinput" type="file" onchange="loadData()" multiple></input>
 		<hr>
-		<button onclick="precision++">Precision Up</button>
-		<button onclick="precision--">Precision Down</button>
+		<button onclick="addPrecision(10)">Precision +10</button>
+		<button onclick="addPrecision(1)">Precision +1</button>
+		<button onclick="addPrecision(-1)">Precision -1</button>
+		<button onclick="addPrecision(-10)">Precision -10</button>
 	</div>
 	<div id="log"></div>
 </body>
@@ -30,7 +32,7 @@
 <script src="NN.js"></script>
 <script src="matrix.js"></script>
 <script src="log.js"></script>
-<script src="bptt.js"></script>
+<script src="train.js"></script>
 <script src="fileSavingLoading.js"></script>
 <script src="graphics.js"></script>
 

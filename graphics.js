@@ -21,7 +21,7 @@ function drawNetwork() {
 				hue = 200;
 			}
 			//determine lightness
-			let lightness = Math.abs(weights[i][j])*90 + 10;
+			let lightness = Math.abs(weights[i][j])*95 + 5;
 			ctx.fillStyle = "hsl("+hue+",100%,"+lightness+"%)";
 			
 			ctx.fillRect(30 + 5*i, 30+5*j, 4, 4);
