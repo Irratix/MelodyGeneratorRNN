@@ -20,12 +20,12 @@ class NeuralNet {
 		this.outputFunction = x => Math.tanh(x);
 	}
 	
-	//resets the state vector
+	// resets the state vector
 	resetState() {
 		this.state.setZeroes();
 	}
 	
-	//changes the activation function. is sigmoid by default
+	// changes the activation function. is sigmoid by default
 	changeActivation(x) {
 		if (typeof x != "function") {
 			throw(`Error: can't set activation function to something that isn't a function`);
@@ -39,7 +39,7 @@ class NeuralNet {
 	}
 	
 	
-	//changes the output function
+	// changes the output function
 	changeOutputFunction(x) {
 		if (typeof x != "function") {
 			throw(`Error: can't set output function to something that isn't a function`);
@@ -52,7 +52,7 @@ class NeuralNet {
 		this.outputFunction = x;
 	}
 	
-	//calculates the new state based on some input vector
+	// calculates the new state based on some input vector
 	calculateState(input) {
 		if (input instanceof Matrix == false) {
 			throw(`Error: cannot take non-vector as input. Vectors must be an instance of Matrix`);
@@ -72,16 +72,17 @@ class NeuralNet {
 		this.state = vectorSum.withFunction(this.activation);
 	}
 	
-	//returns the output based on the current state
+	// returns the output based on the current state
 	getOutput() {
 		return this.weight_Out.mult(this.state).add(this.bias_Out).withFunction(this.outputFunction);
 	}
 	
-	//returns the output based on the current state, without activation function
+	// returns the output based on the current state, without activation function
 	getOutputWOS() {
 		return this.weight_Out.mult(this.state).add(this.bias_Out);
 	}
 	
+	// returns the sum of cost values for a given desired value
 	costSum(desiredValue) {
 		let cost = this.getOutput().add(desiredValue.scale(-1)).withFunction(x => x ** 2);
 		let sum = 0;

@@ -1,6 +1,6 @@
 class Matrix {
 	
-	//basic syntax:
+	// basic syntax:
 	/*
 		to make a new matrix use new Matrix()
 		parameters are either an array, a 2d array, or two numbers indicating the size of the matrix
@@ -25,21 +25,21 @@ class Matrix {
 	*/
 	
 	constructor(m, n) {
-		//several cases:
+		// several cases:
 		if (typeof m == "number") {
-			//1- sizes are given: initialize an empty array with given sizes
+			// 1- sizes are given: initialize an empty array with given sizes
 			this.constructBySize(m,n);
 		} else if (Array.isArray(m)) {
-			//2- input array is given, just turn it into matrix
+			// 2- input array is given, just turn it into matrix
 			this.constructByArray(m);
 		} else {
-			//3- unknown type, just set to null
+			// 3- unknown type, just set to null
 			throw(`Error: invalid declaration of matrix: incompatible parameters`);
 			return;
 		}
 	}
 	
-	//a vector was given, turn it into a valid matrix
+	// a vector was given, turn it into a valid matrix
 	constructAsVector(m) {
 		this.width = this.m = 1;
 		this.height = this.n = m.length;
@@ -50,23 +50,23 @@ class Matrix {
 		}
 	}
 	
-	//a 2D array was given, turn it into a valid matrix
+	// a 2D array was given, turn it into a valid matrix
 	constructAsMatrix(m) {
-		//do some type validity checks
+		// do some type validity checks
 		if (typeof m[0][0] == "bigint") {
-			//just a warning, but continue
+			// just a warning, but continue
 			console.log(`WARNING: BigInts in matrix will be converted to Number primitive`);
 		} else if (typeof Number(m[0][0]) != "number") {
-			//known incompatible type, just halt
+			// known incompatible type, just halt
 			throw(`Error: invalid declaration of matrix: inconsistent types in array object`);
 			return;
 		}
-		//check for maximum height
+		// check for maximum height
 		let length = 0;
 		for (let i of m) {
 			i.length>length?length=i.length:0;
 		}
-		//now set the array. make sure to set empty entries to 0
+		// now set the array. make sure to set empty entries to 0
 		this.width = this.m = m.length;
 		this.height = this.n = length;
 		this.matrix = [];
@@ -82,9 +82,9 @@ class Matrix {
 		}
 	}
 	
-	//constructor given by an array
+	// constructor given by an array
 	constructByArray(m) {
-		//first check if entries are consistent
+		// first check if entries are consistent
 		let isConsistent = true;
 		for (let i=0; i<m.length-1; i++) {
 			if (typeof(m[i]) != typeof(m[i+1])) {
@@ -95,25 +95,25 @@ class Matrix {
 			throw(`Error: invalid declaration of matrix: inconsistent types in array object`);
 			return;
 		}
-		//check if it's a vector or a matrix 
+		// check if it's a vector or a matrix 
 		if (Array.isArray(m[0]) || m[0] instanceof Float32Array) {
-			//this is already a 2d array, import it
+			// this is already a 2d array, import it
 			this.constructAsMatrix(m);
 		} else if (typeof Number(m[0]) == "number") {
-			//this is a vector, just turn it into a 1xN matrix
+			// this is a vector, just turn it into a 1xN matrix
 			this.constructAsVector(m);
 		} else if (typeof m[0] == "bigint") {
-			//give a warning, but process the same as a regular vector
+			// give a warning, but process the same as a regular vector
 			console.log`WARNING: BigInts in matrix will be converted to Number primitive`;
 			this.constructAsVector(m);
 		} else {
-			//invalid types
+			// invalid types
 			throw(`Error: invalid declaration of matrix: non-valid type in array object`);
 			return;
 		}
 	}
 	
-	//constructor given by 2 ints, given width and height
+	// constructor given by 2 ints, given width and height
 	constructBySize(m, n) {
 		if (typeof n != "number") {
 			throw(`Error: invalid declaration of matrix: incompatible parameters`);
@@ -125,11 +125,11 @@ class Matrix {
 		for (let i=0; i<m; i++) {
 			this.matrix[i] = [];
 		}
-		//initialize with zeroes
+		// initialize with zeroes
 		this.setZeroes();
 	}
 	
-	//sets every entry in the matrix to 0
+	// sets every entry in the matrix to 0
 	setZeroes() {
 		if (this.m * this.n < 1e5) {
 			for (let i of this.matrix) {
@@ -146,7 +146,7 @@ class Matrix {
 		}
 	}
 	
-	//sets every entry in the matrix to a random value
+	// sets every entry in the matrix to a random value
 	setRandom(min, max) {
 		if (min == undefined) {
 			min = 0;
@@ -163,7 +163,7 @@ class Matrix {
 		}
 	}
 	
-	//multiplies this matrix by another matrix
+	// multiplies this matrix by another matrix
 	mult(object) {
 		this.isComputing = true;
 		if (object instanceof Matrix == false) {
@@ -174,7 +174,7 @@ class Matrix {
 			throw(`Error: cannot multiply ${this.m}*${this.n} matrix with ${object.m}*${object.n} matrix`);
 		}
 		
-		//single thread approach
+		// single thread approach
 		if (this.m * this.n * object.m < 1e5) {
 			let newMatrix = new Matrix(object.m, this.n);
 			for (let i=0; i<newMatrix.m; i++) {
@@ -189,7 +189,7 @@ class Matrix {
 			return newMatrix;
 		}
 		
-		//GPU approach
+		// GPU approach
 		if (this.m*this.n*object.m > 3000**3) {
 			throw(`Error: ultra large matrix multiplication currently not well-supported`);
 			return;
@@ -205,7 +205,7 @@ class Matrix {
 		return new Matrix(multiply(this.matrix, object.matrix, this.m));
 	}
 	
-	//returns a new matrix where function x has been applied to every entry of this matrix
+	// returns a new matrix where function x has been applied to every entry of this matrix
 	withFunction(x) {
 		if (typeof x != "function") {
 			throw(`Error: cannot apply function to matrix: parameter is not a function`);
@@ -228,7 +228,7 @@ class Matrix {
 		return newMatrix;
 	}
 	
-	//adds a matrix to this matrix
+	// adds a matrix to this matrix
 	add(object) {
 		if (object instanceof Matrix == false) {
 			throw(`Error: cannot add non-matrix object to matrix`);
@@ -254,7 +254,7 @@ class Matrix {
 		return new Matrix(addMatrices(this.matrix, object.matrix));
 	}
 	
-	//returns a matrix that is equal to this matrix scaled by some number
+	// returns a matrix that is equal to this matrix scaled by some number
 	scale(n) {
 		let x = Number(n);
 		if (typeof x != "number") {
@@ -277,7 +277,7 @@ class Matrix {
 		return new Matrix(addMatrices(this.matrix, x));
 	}
 	
-	//returns whether or not this is a vertical vector
+	// returns whether or not this is a vertical vector
 	isVector() {
 		return this.m == 1;
 	}

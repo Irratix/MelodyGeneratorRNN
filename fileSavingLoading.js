@@ -1,4 +1,4 @@
-//loads training data
+// loads training data
 function loadData() {
 	log("Loading training data...");
 	data = [];
@@ -16,7 +16,7 @@ function loadData() {
 	log(fileAmt + " files loaded.");
 }
 
-//saves current network
+// saves current network as JSON file
 function saveNetwork() {
 	let objectString = JSON.stringify(network, null, "\t");
 	let a = document.createElement('a');
@@ -26,7 +26,7 @@ function saveNetwork() {
 	a.click();
 }
 
-//saves an object as JSON
+// saves an object as JSON file
 function saveObject(object, name) {
 	let objectString = JSON.stringify(object, null, "\t");
 	let a = document.createElement('a');
@@ -36,7 +36,7 @@ function saveObject(object, name) {
 	a.click();
 }
 
-//loads existing network
+// loads an existing network
 function loadNetwork() {
 	NNinput.click();
 }
@@ -45,6 +45,7 @@ let NNinput;
 NNinput = document.createElement('input');
 NNinput.type = 'file';
 
+// convert loaded object into proper NN object
 NNinput.onchange = e => { 
 	let file = e.target.files[0]; 
 	let reader = new FileReader();

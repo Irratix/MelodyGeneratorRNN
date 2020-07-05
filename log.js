@@ -1,7 +1,7 @@
-//div object for logging
+// html div element for logging
 var logbox = document.getElementById("log");
 
-//on-screen log
+// on-screen log
 function log(msg) {
 	if (typeof msg != "string") {
 		msg = JSON.stringify(msg);
@@ -10,7 +10,7 @@ function log(msg) {
 	logbox.innerHTML = logbox.innerHTML.substring(0,10000);
 }
 
-//get time as HH:MM string
+// get time as [HH:MM] string
 function time() {
 	var date = new Date();
 	let minutes = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
