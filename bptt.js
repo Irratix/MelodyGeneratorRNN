@@ -1,16 +1,18 @@
 let precision = 10;
 let totalCost = 0;
+let costSum = 0;
+let activeMelody = 0;
 
 //train a network on a dataset
 function train() {
 	let weight_adjust = new Matrix(NET_STATE_SIZE, NOTE_RANGE);
 	let bias_adjust = new Matrix(1, NOTE_RANGE);
-	totalCost = 0;
 	
-	//for each melody in the dataset
-	for (melody of data) {
-		network.resetState();
+	for (let h=activeMelody; h<activeMelody+10; h++) {
+		if (h >= data.length) break;
+		melody = data[h];
 		
+		network.resetState();
 		//for each timestep (minus 1) in the melody
 		for (let i=0; i<melody.length-1; i++) {
 			network.calculateState(new Matrix(melody[i]));
@@ -41,11 +43,18 @@ function train() {
 		}
 	}
 	
+	activeMelody += 10;
+	if (activeMelody >= data.length) activeMelody = 0;
+	
 	// average/scale bias_adjust and weight_adjust
 	bias_adjust   = bias_adjust.scale(1/(data.length * 63 * precision));
 	weight_adjust = weight_adjust.scale(1/(data.length * 63 * precision));
 	
-	drawCostSum();
+	if (activeMelody < 10) {
+		costSum = totalCost;
+		drawCostSum();
+		totalCost = 0;
+	}
 	
 	// apply to network weights and biases
 	network.bias_Out = network.bias_Out.add(bias_adjust);

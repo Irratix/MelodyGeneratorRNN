@@ -33,6 +33,10 @@ function update() {
 	drawNetwork();
 	drawBias();
 	drawCostSum();
+	drawPrecision();
+	drawTraining();
+	drawSetSize();
+	drawActiveMelody();
 	
 	window.requestAnimationFrame(update);
 }

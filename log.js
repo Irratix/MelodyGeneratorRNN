@@ -7,7 +7,7 @@ function log(msg) {
 		msg = JSON.stringify(msg);
 	}
 	logbox.innerHTML = time() + " " + msg + "<br>" + logbox.innerHTML;
-	logbox.innerHTML = logbox.innerHTML.substring(0,1000);
+	logbox.innerHTML = logbox.innerHTML.substring(0,10000);
 }
 
 //get time as HH:MM string

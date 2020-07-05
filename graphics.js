@@ -5,8 +5,8 @@ c.height = 500;
 
 function drawNetwork() {
 	ctx.fillStyle = "white";
-	ctx.font = "12px Verdana";
-	ctx.fillText("OUTPUT WEIGHT MATRIX", 30, 25);
+	ctx.font = "14px Monospace";
+	ctx.fillText("OUTPUT WEIGHT MATRIX", 30, 22);
 	
 	if (network == null) return;
 	
@@ -31,8 +31,8 @@ function drawNetwork() {
 
 function drawBias() {
 	ctx.fillStyle = "white";
-	ctx.font = "12px Verdana";
-	ctx.fillText("BIASES", 30, 185);
+	ctx.font = "14px Monospace";
+	ctx.fillText("BIASES", 30, 180);
 	
 	if (network == null) return;
 	
@@ -55,5 +55,26 @@ function drawBias() {
 
 function drawCostSum() {
 	ctx.fillStyle = "white";
-	ctx.fillText("SUM OF COST VALUES: " + totalCost.toFixed(3), 30, 250);
+	ctx.fillText("SUM OF COST VALUES: " + costSum.toFixed(3), 30, 250);
+}
+
+function drawPrecision() {
+	ctx.fillStyle = "white";
+	ctx.fillText("PRECISION         : " + precision, 30, 270);
+}
+
+function drawTraining() {
+	ctx.fillStyle = "white";
+	ctx.fillText("TRAINING          : " + training.toString().toUpperCase(), 30, 290);
+}
+
+function drawSetSize() {
+	ctx.fillStyle = "white";
+	let size = data != null ? data.length : 0;
+	ctx.fillText("TRAINING SET SIZE : " + size, 30, 310);
+}
+
+function drawActiveMelody() {
+	ctx.fillStyle = "white";
+	ctx.fillText("ACTIVE MELODY     : " + activeMelody, 30, 330);
 }
