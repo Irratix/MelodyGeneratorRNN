@@ -6,7 +6,7 @@
 #buttonBar {
 	background-color: #ffffff11;
 	width: 170px;
-	height: 490px;
+	height: 440px;
 	padding: 5px;
 	display: inline-block;
 	vertical-align: top;
@@ -47,8 +47,8 @@
 }
 
 #log {
-	width: 900px;
-	height: 400px;
+	width: 784px;
+	height: 300px;
 	background-color: #000;
 	color: #fff;
 	vertical-align: top;
@@ -61,6 +61,7 @@
 
 body {
 	background-color: #222529;
+	padding: 10px;
 }
 
 button {

@@ -1,7 +1,7 @@
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d", {alpha: false});
-c.width = 900;
-c.height = 500;
+c.width = 600;
+c.height = 450;
 
 function drawNetwork() {
 	ctx.fillStyle = "white";
