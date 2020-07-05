@@ -74,7 +74,7 @@ function startGenerating() {
 	}
 	
 	const melodyLength = (function() {
-		return 5000;
+		return 128;
 	})();
 	generate(network, melodyLength);
 }
